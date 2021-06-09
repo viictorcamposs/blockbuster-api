@@ -10,6 +10,7 @@ categoriesRoutes.get("/", (request, response) => {
 
   return response.status(200).json(all);
 });
+
 categoriesRoutes.post("/", (request, response) => {
   const { name } = request.body;
 
@@ -24,6 +25,23 @@ categoriesRoutes.post("/", (request, response) => {
   const newCategory = categoriesRepository.create(name);
 
   return response.status(201).json(newCategory);
+});
+
+categoriesRoutes.patch("/:name/edit", (request, response) => {
+  const { name: editedName } = request.body;
+  const { name } = request.params;
+
+  const foundCategory = categoriesRepository.findByName(name);
+
+  if (!foundCategory) {
+    return response.status(400).json({
+      error: "Couldn't edit category.",
+    });
+  }
+
+  const editedCategory = categoriesRepository.edit(name, editedName);
+
+  return response.status(200).json(editedCategory);
 });
 
 export { categoriesRoutes };
