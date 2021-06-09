@@ -27,11 +27,13 @@ categoriesRoutes.post("/", (request, response) => {
   return response.status(201).json(newCategory);
 });
 
-categoriesRoutes.patch("/:name/edit", (request, response) => {
+categoriesRoutes.patch("/", (request, response) => {
   const { name: editedName } = request.body;
-  const { name } = request.params;
+  const { id } = request.headers;
 
-  const foundCategory = categoriesRepository.findByName(name);
+  const allCategories = categoriesRepository.list();
+
+  const foundCategory = allCategories.find((category) => category.id === id);
 
   if (!foundCategory) {
     return response.status(400).json({
@@ -39,7 +41,7 @@ categoriesRoutes.patch("/:name/edit", (request, response) => {
     });
   }
 
-  const editedCategory = categoriesRepository.edit(name, editedName);
+  const editedCategory = categoriesRepository.edit(String(id), editedName);
 
   return response.status(200).json(editedCategory);
 });

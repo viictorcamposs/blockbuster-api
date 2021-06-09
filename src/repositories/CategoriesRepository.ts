@@ -32,19 +32,15 @@ export class CategoriesRepository {
     return newCategory;
   }
 
-  edit(name: string, editedName: string): Category {
-    const category = this.categories.find(
-      (category) => category.name === name.toLowerCase()
-    );
+  edit(id: string, editedName: string): Category {
+    const category = this.categories.find((category) => category.id === id);
 
     const editedCategory: Category = {
       ...category,
       name: editedName.toLowerCase(),
     };
 
-    this.categories = this.categories.filter(
-      (category) => category.name !== name.toLowerCase()
-    );
+    this.categories = this.categories.filter((category) => category.id !== id);
     this.categories.push(editedCategory);
 
     return editedCategory;
