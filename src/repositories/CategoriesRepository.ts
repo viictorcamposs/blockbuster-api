@@ -45,4 +45,8 @@ export class CategoriesRepository {
 
     return editedCategory;
   }
+
+  remove(id: string): void {
+    this.categories = this.categories.filter((category) => category.id !== id);
+  }
 }
