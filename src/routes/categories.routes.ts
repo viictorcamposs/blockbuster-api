@@ -46,4 +46,12 @@ categoriesRoutes.patch("/", (request, response) => {
   return response.status(200).json(editedCategory);
 });
 
+categoriesRoutes.delete("/", (request, response) => {
+  const { id } = request.headers;
+
+  categoriesRepository.remove(String(id));
+
+  return response.status(200).send();
+});
+
 export { categoriesRoutes };
