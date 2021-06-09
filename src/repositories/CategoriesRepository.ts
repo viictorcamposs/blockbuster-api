@@ -29,4 +29,20 @@ export class CategoriesRepository {
 
     return newCategory;
   }
+
+  edit(name: string, editedName: string): Category {
+    const category = this.categories.find((category) => category.name === name);
+
+    const editedCategory: Category = {
+      ...category,
+      name: editedName,
+    };
+
+    this.categories = this.categories.filter(
+      (category) => category.name !== name
+    );
+    this.categories.push(editedCategory);
+
+    return editedCategory;
+  }
 }
