@@ -12,7 +12,9 @@ export class CategoriesRepository {
   }
 
   findByName(name: string): Category {
-    const category = this.categories.find((category) => category.name === name);
+    const category = this.categories.find(
+      (category) => category.name === name.toLowerCase()
+    );
 
     return category;
   }
@@ -21,7 +23,7 @@ export class CategoriesRepository {
     const newCategory = new Category();
 
     Object.assign(newCategory, {
-      name,
+      name: name.toLowerCase(),
       created_at: new Date(),
     });
 
@@ -31,15 +33,17 @@ export class CategoriesRepository {
   }
 
   edit(name: string, editedName: string): Category {
-    const category = this.categories.find((category) => category.name === name);
+    const category = this.categories.find(
+      (category) => category.name === name.toLowerCase()
+    );
 
     const editedCategory: Category = {
       ...category,
-      name: editedName,
+      name: editedName.toLowerCase(),
     };
 
     this.categories = this.categories.filter(
-      (category) => category.name !== name
+      (category) => category.name !== name.toLowerCase()
     );
     this.categories.push(editedCategory);
 
