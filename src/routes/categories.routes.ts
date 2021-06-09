@@ -31,11 +31,9 @@ categoriesRoutes.patch("/", (request, response) => {
   const { name: editedName } = request.body;
   const { id } = request.headers;
 
-  const allCategories = categoriesRepository.list();
+  const verifyIfCategoryExists = categoriesRepository.findById(String(id));
 
-  const foundCategory = allCategories.find((category) => category.id === id);
-
-  if (!foundCategory) {
+  if (!verifyIfCategoryExists) {
     return response.status(400).json({
       error: "Couldn't edit category.",
     });
@@ -48,6 +46,14 @@ categoriesRoutes.patch("/", (request, response) => {
 
 categoriesRoutes.delete("/", (request, response) => {
   const { id } = request.headers;
+
+  const verifyIfCategoryExists = categoriesRepository.findById(String(id));
+
+  if (!verifyIfCategoryExists) {
+    return response.status(400).json({
+      error: "Couldn't delete category.",
+    });
+  }
 
   categoriesRepository.remove(String(id));
 
