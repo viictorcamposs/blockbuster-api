@@ -19,6 +19,12 @@ export class CategoriesRepository {
     return category;
   }
 
+  findById(id: string): Category {
+    const category = this.categories.find((category) => category.id === id);
+
+    return category;
+  }
+
   create(name: string): Category {
     const newCategory = new Category();
 
