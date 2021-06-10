@@ -1,6 +1,7 @@
 import { Category } from "../model/Category";
+import { ICategoriesRepository } from "./ICategoriesRepository";
 
-export class CategoriesRepository {
+export class CategoriesRepository implements ICategoriesRepository {
   private categories: Category[];
 
   constructor() {
